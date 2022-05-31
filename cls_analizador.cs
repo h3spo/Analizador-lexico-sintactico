@@ -694,13 +694,10 @@ namespace editor_de_texto
                     case 0:
                         if (actual==500)
                         {
-                            
-                            estado = 1;
-                            
+                            estado = 1;   
                         }
                         else 
                         {
-
                             addErrorSintac("Se esperaba started" ,1001,actual);
                             estado =99;
                         }
@@ -708,7 +705,7 @@ namespace editor_de_texto
                     case 1:
                         if (actual == 110)
                         {
-                            estado = 0;
+                            estado = 2;
                         }
                         else
                         {
@@ -716,6 +713,84 @@ namespace editor_de_texto
                             estado = 99;
                         }
                         break;
+                    //? se da incio al control de variables 
+                    //!varaible = {(vare) (:)  (inter|decim|text) (varaible) (;)}
+                    case 2:
+                        if(actual==501)
+                        {
+                            //500=(vare)
+                            estado =3;
+                        }
+                        else
+                        {
+                            addErrorSintac("Se esperaba vare",1000,actual);
+                            estado =999;
+                        }
+                    break;
+                    case 3:
+                        if(actual ==162)
+                        {
+                            // (vare) (:)
+                            estado = 4;
+                        }
+                        else
+                        {
+                          addErrorSintac("Se esperaba :",1000, actual);
+                          estado =999;
+                        }
+                    break;
+                    case 4:
+                        if(actual >=502 && actual <= 504)
+                        {
+                            // (vare) (:) (inter 502|decim 503|text 504)
+                            estado=5;
+
+                        }
+                        else
+                        {
+                            addErrorSintac("Se esperaba un tipo",1000, actual);
+                            estado =999;
+                        }
+                    break;
+                    case 5:
+                        if(actual ==110)
+                        {
+                            // (vare) (:) (inter 502|decim 503|text 504) (variable)
+                            estado =6;
+                        }
+                        else 
+                        {
+                            addErrorSintac("Se esperaba un Nombre", 1000,actual);
+                            estado =999;
+                        }
+                    break;
+                    case 6:
+                        if(actual ==161)
+                        {
+                            //;
+                            estado =7;
+                        }
+                        else
+                        {
+                            addErrorSintac("Se esperaba ;",1000,actual);
+                            estado = 999;
+                        }
+                    break;
+                    //todo repetimos todo el proceso de nuevo por si llegan mas declariciones de variables
+                    case 7:
+                        if(actual == 501)
+                        {
+                            i--;
+                            estado = 2;
+                        }
+                        else 
+                        {
+                            //!MODIFICAR ESTA ESPERANDO A QUE SI GUE DE DECLARACION DE VARIABLES
+                            addErrorSintac("error",1000, actual);
+                            estado = 999;
+                        }
+                    break;
+
                 }
             }
             
@@ -783,7 +858,7 @@ namespace editor_de_texto
         }
         public int verificar_reservada(string lexema) 
         {
-            string[] reservada = { "started", "inter", "decim", "text" };
+            string[] reservada = { "started","vare", "inter", "decim", "text" };
             int encontrado = 0;
             for (int p  = 0; p < reservada.Length; p++)
             {

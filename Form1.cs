@@ -216,6 +216,20 @@ namespace editor_de_texto
         {
 
         }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+
+           
+            
+
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
     }
 
 }
