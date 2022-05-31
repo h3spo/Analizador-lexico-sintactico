@@ -9,10 +9,10 @@ namespace editor_de_texto
     class cls_error
     {
         private String lexema;
-        private String id_Token;
+        private int id_Token;
         private int linea;
         private int columna;
-        public cls_error(String lexema, String idToken, int linea, int columna)
+        public cls_error(String lexema, int idToken, int linea, int columna)
         {
 
             this.lexema = lexema;
@@ -24,7 +24,7 @@ namespace editor_de_texto
         {
             return this.lexema;
         }
-        public String get_IdToken()
+        public int get_IdToken()
         {
             return this.id_Token;
         }

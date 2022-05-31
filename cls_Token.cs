@@ -9,11 +9,11 @@ namespace editor_de_texto
     class cls_Token
     {
         private string lexema;
-        private string idtoken;
+        private int idtoken;
         private int linea;
         private int columna;
         private int indice;
-        public cls_Token(string lexema, string idtoken, int linea, int columna, int indice)
+        public cls_Token(string lexema, int idtoken, int linea, int columna, int indice)
         {
             this.lexema = lexema;
             this.idtoken = idtoken;
@@ -29,7 +29,7 @@ namespace editor_de_texto
         {
             return this.lexema;
         }
-        public string get_idtoken()
+        public int get_idtoken()
         {
             return this.idtoken;
         }

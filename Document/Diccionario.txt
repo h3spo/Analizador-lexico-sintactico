@@ -1,0 +1,118 @@
+
+       IDENTIFICADOR DE TOKENS
+
+        | Identificador_________________|Num token |
+        -------------------------------------------|
+        |Palabras reservadas____________|500_______|
+        |Identificador__________________|100_______|
+        |CADENAS------------------------|101-------|
+
+
+        |numero-------------------------|110-------|
+        |numero decimal-----------------|111-------|
+
+
+        -------------OPeradores aritmeticos--------
+        |+------------------------------|120-------|
+        |- -----------------------------|121-------|
+        |*------------------------------|122-------|
+        |/------------------------------|123-------|
+
+
+        -----OPERARADORES RELACIONALES--------------
+        |<------------------------------|130--------|
+        |<=-----------------------------|131--------|
+        |>------------------------------|132--------|
+        |>=-----------------------------|133--------|
+        |<>-----------------------------|134--------|
+        |=------------------------------|135--------|
+
+        --------IGUALACION--------------------------
+        |:------------------------------|140--------|
+        |:=-----------------------------|141--------|
+
+
+        ---------AGRUPADORES------------------------|
+        |(------------------------------|150--------|
+        |)------------------------------|151--------|
+
+        ----------SIMBOLOS---------------------------
+        |,------------------------------|160--------|
+        |;------------------------------|161--------|
+        |:------------------------------|162--------|
+
+        ---------COMENTARIOS-------------------------
+        |'ASCCI-------------------------|170--------|
+
+        ----------RESERVADAS-------------------------
+        |Identificador__________________|num token---|
+        |vare---------------------------|500---------|
+        |inter--------------------------|501---------|
+        |decim--------------------------|502---------|
+        |text---------------------------|503---------|
+        
+
+
+
+
+        REAGLAS PARA EL ANASIS DE  DE SINTAXIS 
+
+
+        Reglas
+Variable = { (vare) (:) (variable)(inter|decim|text)(;) }
+
+
+Ciclo while = { (during) (expresion) (preposicion) (finish) (;) }
+
+condicional if = (istrue) "(" (expresion) ")" (preposicion)* ({) [(else)(preposicion) (}) (finish) ] }
+
+write Line = { (write input)(cadena|variable) }
+
+read line = { (write output) (cadena | variable) }
+
+Incremento = { (Increases) (variable) (;) }
+
+Decremento = { (Decrease) (variable) (;) }
+
+llamada al metodo = { (function)(varaible)"(" (variable)* ")"(;) }
+
+
+metodo= { (procedure)(variable)"("((variable)(,)*)* ")"(start)(proposicion)*(finish)(;)}
+
+preposicon= { (igualacion)|(cond if)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
+
+expresion = {(exp-simple)(operadores)(ep-simple)[y ,or]*}
+
+expresion simple ={"(" (exp-simple) ")" [+|-|*|/] |(exp-simple) (operacion)[+|-|*|/](expresion-simple)}
+
+cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicion)*(ended)(term) }
+ #Jesus fabiel Partida camacho
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ERROR 300 = FALTA " AL FINAL DE LA CADENA [CADENA INCOOMPLETA]
+        ERROR 301 = NUMERO + . + LETRA 
+        ERROR 302 = IDENTIFICADOR  LETRA + != LETRA O DIGITO
+
+         #Revision agregar la e
+         #cada palabra reservda debe tener un componente diferente
+
+        
+
+        */

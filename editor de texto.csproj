@@ -50,6 +50,8 @@
     <Compile Include="cls_error.cs" />
     <Compile Include="cls_gr_ejecutar.cs" />
     <Compile Include="cls_lectura_lineas.cs" />
+    <Compile Include="cls_sintac.cs" />
+    <Compile Include="cls_sintacError.cs" />
     <Compile Include="cls_Token.cs" />
     <Compile Include="Diccionario.cs" />
     <Compile Include="Form1.cs">
