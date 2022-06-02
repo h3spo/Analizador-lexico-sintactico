@@ -3,3 +3,4 @@ vare :  inter  nombre ;
 vare : decim nombre2 ;
 vare  : text nombre3 ;
 
+procedure nombre (nombre , nombre )

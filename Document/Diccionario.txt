@@ -4,7 +4,7 @@
         | Identificador_________________|Num token |
         -------------------------------------------|
         |Palabras reservadas____________|500_______|
-        |Identificador__________________|100_______|
+        |variables    __________________|110_______|
         |CADENAS------------------------|101-------|
 
 
@@ -46,10 +46,13 @@
 
         ----------RESERVADAS-------------------------
         |Identificador__________________|num token---|
-        |vare---------------------------|500---------|
-        |inter--------------------------|501---------|
-        |decim--------------------------|502---------|
-        |text---------------------------|503---------|
+        |started------------------------|500---------|
+        |vare---------------------------|501---------|
+        |inter--------------------------|502---------|
+        |decim--------------------------|503---------|
+        |text---------------------------|504---------|
+        |procedure----------------------|505---------|
+
         
 
 
@@ -59,7 +62,8 @@
 
 
         Reglas
-Variable = { (vare) (:) (variable)(inter|decim|text)(;) }
+        
+varaible = {(vare) (:)  (inter|decim|text) (varaible) (;)}
 
 
 Ciclo while = { (during) (expresion) (preposicion) (finish) (;) }
@@ -77,7 +81,7 @@ Decremento = { (Decrease) (variable) (;) }
 llamada al metodo = { (function)(varaible)"(" (variable)* ")"(;) }
 
 
-metodo= { (procedure)(variable)"("((variable)(,)*)* ")"(start)(proposicion)*(finish)(;)}
+metodo= { (procedure)(variable)"("(()variable(,)*)* ")"(start)(proposicion)*(finish)(;)}
 
 preposicon= { (igualacion)|(cond if)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
 
@@ -112,6 +116,11 @@ cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicio
 
          #Revision agregar la e
          #cada palabra reservda debe tener un componente diferente
+
+         ---------------------ERROR DE SINTAXIS--------------------------------------------------------------------------
+         |NUMERO DE ERROR--|DESCRIPCION----------------------------------------------------------------------------------
+         |1000             |fallo el incio del codigo no se inicio correctamente
+         
 
         
 

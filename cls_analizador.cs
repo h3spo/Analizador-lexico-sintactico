@@ -682,7 +682,9 @@ namespace editor_de_texto
 
         public void analisis_sintactico() 
         {
+            int parentesis_abre =0;
             int estado = 0;
+            
             //?es la pila que ya contienen todos los tokens
            // int Stack = pila.Count;
             for (int i = 0; i < lista_sintac.Count; i++)
@@ -692,8 +694,10 @@ namespace editor_de_texto
                 switch (estado)
                 {
                     case 0:
+                         
                         if (actual==500)
                         {
+                            
                             estado = 1;   
                         }
                         else 
@@ -783,59 +787,188 @@ namespace editor_de_texto
                             i--;
                             estado = 2;
                         }
+                        //!COMIENZA EL CONTROL PARA METODOS 
+                         //! metodo= { (procedure)(variable)"("((variable)(,)*)* ")"(start)(proposicion)*(finish)(;)}
+                        else if(actual == 505)//todo esperamos la llamada a un metodo
+                        {
+                            // metodo = {(procedure 505)}
+                            estado = 8;
+
+                        }
                         else 
                         {
                             //!MODIFICAR ESTA ESPERANDO A QUE SI GUE DE DECLARACION DE VARIABLES
-                            addErrorSintac("error",1000, actual);
+                            addErrorSintac("se esperaba la llamada a un metodo ",1000, actual);
                             estado = 999;
                         }
                     break;
+                       
+                    case 8:
+                       if(actual == 110 )
+                         {
+                         // metodo = {(prodcedure 505) (variable)}
+                           estado =9;
+                            
+                         }
+                        else 
+                        {
+                            addErrorSintac("Se esperaba un nombre",1000,actual);
+                            estado = 999;
+                        }
+                    
+                    break;
+                    case 9:
+                      if(actual == 150)
+                      {
+                          // metodo= {(procedure 505) (variable 110) "(")}
+                          parentesis_abre ++;
+                          estado =10;
+
+                      }
+                      else 
+                      {
+                          addErrorSintac("Se esperaba ( ",1000,actual);
+                          estado = 999;
+                      }
+                    break;
+                    case 10:
+                    if(actual ==110  )
+                    {
+                         // metodo= {(procedure 505) (variable 110) "(") (variable)}
+                         estado =11;
+                         
+                    }
+                    
+                    else
+                    {
+                        addErrorSintac("se espera una variable",1000,actual);
+                        estado=999;
+                    }
+                    break;
+                    case 11:
+                      if(actual==160)
+                      {
+                           // metodo= {(procedure 505) (variable 110) "(") (variable) (, 160) (variable) }
+                           estado =10;
+                             
+                      }
+                     
+
+                      else 
+                      {  if(actual != 151)
+                         {
+                             addErrorSintac("Error Sintax",1000,actual);
+                         }
+                         else
+                         {
+                             estado =12;
+                             i--;
+
+                         }
+                         
+                         //addErrorSintac("error",1000,actual);
+                      }
+                    break;
+                    case 12:
+                     if(actual==151)
+                     {
+                         // metodo= {(procedure 505) (variable 110) "(") (variable) (, 160) (variable) ")"}
+                         
+                         estado = 13;
+                     }
+                     else
+                     {
+                         addErrorSintac("Se esperaba )",1000,actual);
+                     }
+                    break;
+                    case 13:
+                       if(actual == 506)
+                       {
+                         // metodo= {(procedure 505) (variable 110) "(") (variable) (, 160) (variable) ")"  (start)}
+                         estado =14;   
+
+                       }
+                       else
+                       {
+                           addErrorSintac ("Se esperaba start",1000,actual);
+                           estado = 999;
+                       }
+                    break;
+                    case 14: //todo AQUI INICA EL FUNCIONAMIENTO DE UN METODO AQUI VAN LOS CASOS DE INCIO DE UN METODO
+                    //preposicon= { (igualacion)|(cond if)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
+                     //? igualacion = (variable) (:|:=) (varaible) o numero o LETRA (;)
+                     //? igualacion = (variable 110)
+                     if(actual==110)
+                     {
+                         estado = 15;
+                     }
+                     else //todo Error compartido de sintaxis 
+                     {
+                         addErrorSintac("Error sintax Metodo",1000,actual);
+
+                     }
+
+                    break;
+                    //!IGUALACION
+                    case 15:
+                       if(actual == 162 || actual == 135)
+                       {
+                            //? igualacion = (variable 110) (: 162 || := 135) 
+                            estado =16;
+                       }
+                       else
+                       {
+                           addErrorSintac("Se esperaba una igualacion",1000,actual);
+                       }
+
+                    break;
+                     //!Posibles estados 
+                     //varaible 16
+                     // cadenas 17
+                     // numero decimal 18
+                     // numero exponecial 19
+
+                     //! ESTADO QUE VALIDA QUE TERMINO BIEN = 20
+
+
+                    case 16://todo Que va llegar despues de la igualacion
+                        //? igualacion = (variable) (:|:=) (varaible) o numero o LETRA
+                       if(actual==110)//? llego una variable
+                       {
+                           estado =20;
+                           
+
+                       }
+                       else
+                       {
+                           addErrorSintac("Error sintax igualacion",1000,actual);
+                           estado=999;
+
+                       }
+                       //!FALTA APLICAR UN MENEOS MENOS
+
+                    break;
+
+                    case 20:
+                      if(actual==161)
+                      {
+                          estado =14; //se va regresar al estado de incio de metodo
+                      }
+                      else 
+                      {
+                          addErrorSintac("Se esperaba ;",1000,actual);
+                          estado = 999;
+                      }
+
+                    break;
+
 
                 }
             }
             
         }
-        //?metodo en reposo kill de precated
-        public void analizar_sintac2()
-        {
-            int estado = 0;
-            foreach(int dato in pila)
-            {
-                switch(estado)
-                {
-                    case 0:
-                     if (dato==500)
-                        {
-                            
-                            estado = 1;
-                            
-                        }
-                        else 
-                        {
-                            addErrorSintac("Se esperaba started" ,1000,dato);
-                        }
-                    break;
-                    case 1:
-                     if (dato == 110)
-                        {
-                            estado = 2;
-                        }
-                        else
-                        {
-                            addErrorSintac("Se esperaba un nombre", 1000, dato);
-                            estado = 0;
-                        }
-
-                    break;
-                    //!INICIA EL CONTROL PARA VARIABLES 
-                    case 2:
-                      
-                    break;
-
-                }
-
-            }
-        }
+        
+        
           
 
         
@@ -858,7 +991,7 @@ namespace editor_de_texto
         }
         public int verificar_reservada(string lexema) 
         {
-            string[] reservada = { "started","vare", "inter", "decim", "text" };
+            string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","start" };
             int encontrado = 0;
             for (int p  = 0; p < reservada.Length; p++)
             {
@@ -923,6 +1056,20 @@ namespace editor_de_texto
                 lista.Add(lista_sintac[i]);
             }
             return lista;
+        }
+
+        public int elementos_lista()
+        {
+             List<int> lista = new List<int>();
+           // int contador = pila.Count;
+            for (int i = 0; i < lista_sintac.Count; i++)
+            {
+                //lista.Add(Convert.ToInt32( pila.Pop()));
+                lista.Add(lista_sintac[i]);
+            }
+            int total = lista.Count;
+            return total;
+
         }
         
 
@@ -991,7 +1138,7 @@ namespace editor_de_texto
  *  SINO
  *  FIN SI
  *  MIENTRAS
- *  FIN MIENTRAS
+ *  FIN MIENTRAS    
  *  DECLARA
  *  ENTERO
  *  DOBLE
