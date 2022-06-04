@@ -4,3 +4,9 @@ vare : decim nombre2 ;
 vare  : text nombre3 ;
 
 procedure nombre (nombre , nombre )
+start
+variable : hola;
+variable : "ola";
+varaible : ola + 1 - ola * 1e1 / 1.2;
+varaible : asd + (a - 1 * (a - 12.1)) + a ;
+istrue (sdasd

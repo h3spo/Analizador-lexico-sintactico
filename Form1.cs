@@ -140,7 +140,9 @@ namespace editor_de_texto
             obj_analizador.analisis_sintactico();
             dataGridView1.DataSource = obj_analizador.listado_erroresSintac();
             //dataGridView1.DataSource= obj_analizador.listado_erroresSintac();
-            label3.Text=Convert.ToString( obj_analizador.elementos_lista());
+            label3.Text=Convert.ToString( "Numero de caracteres--" +  obj_analizador.elementos_lista());
+            label4.Text=Convert.ToString("Parenthesis abiertos---"+obj_analizador.parentesis_abre());
+            label5.Text=Convert.ToString("Parenthesis cerrados---"+ obj_analizador.parentisis_cierra());
             
             
 
@@ -160,7 +162,7 @@ namespace editor_de_texto
             //ajustar_dataToken();
 
         }
-        private void ajustar_dataToken() 
+        private void ajustar_dataToken()  
         {
             var height = data_tokens.ColumnHeadersHeight;
             foreach (DataGridViewRow dr in data_tokens.Rows)

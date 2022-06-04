@@ -131,6 +131,7 @@ namespace editor_de_texto
                             columna = 0;
                             fila++;
                             estado = 0;
+                            //add_Token(lexema,1,fila,columna, i-lexema.Length);
                         }
                         /* else if (c == '{')
                          {
@@ -344,7 +345,7 @@ namespace editor_de_texto
                         else
                         {
                             //digitos
-                            add_Token(lexema, 110, fila, columna, i - lexema.Length);
+                            add_Token(lexema, 102, fila, columna, i - lexema.Length);
                             lexema = "";
                             i--;
                             columna--;
@@ -483,7 +484,7 @@ namespace editor_de_texto
                         else
                         {
 
-                            add_Token(lexema, 111, fila, columna, i - lexema.Length);
+                            add_Token(lexema, 103, fila, columna, i - lexema.Length);
                             lexema = "";
                             i--;
                             columna--;
@@ -637,7 +638,7 @@ namespace editor_de_texto
                         else
                         {
 
-                            add_Token(lexema, 112, fila, columna, i - lexema.Length);
+                            add_Token(lexema, 104, fila, columna, i - lexema.Length);
                             lexema = "";
                             i--;
                             columna--;
@@ -654,7 +655,7 @@ namespace editor_de_texto
                         else
                         {
 
-                            add_Token(lexema, 113, fila, columna, i - lexema.Length);
+                            add_Token(lexema, 105, fila, columna, i - lexema.Length);
                             lexema = "";
                             i--;
                             columna--;
@@ -677,19 +678,25 @@ namespace editor_de_texto
         }
 
        
-
+      //todo metodo para provar el conteo de los ()
+       List<int> lista_parentesis_abre = new List<int>();
+        List<int> lista_parentesis_cierra = new List<int>();
+       
 
 
         public void analisis_sintactico() 
         {
-            int parentesis_abre =0;
+           
             int estado = 0;
+         
+            
             
             //?es la pila que ya contienen todos los tokens
            // int Stack = pila.Count;
             for (int i = 0; i < lista_sintac.Count; i++)
             {
-                int actual = lista_sintac[i];
+                 
+                 int actual = lista_sintac[i];
                 //int actual = Stack;
                 switch (estado)
                 {
@@ -821,7 +828,7 @@ namespace editor_de_texto
                       if(actual == 150)
                       {
                           // metodo= {(procedure 505) (variable 110) "(")}
-                          parentesis_abre ++;
+                          
                           estado =10;
 
                       }
@@ -898,22 +905,29 @@ namespace editor_de_texto
                     //preposicon= { (igualacion)|(cond if)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
                      //? igualacion = (variable) (:|:=) (varaible) o numero o LETRA (;)
                      //? igualacion = (variable 110)
-                     if(actual==110)
+                     
+                     if(actual==110)//todo llego una igualacion
                      {
                          estado = 15;
                      }
+                     else if(actual==507)//todo llego un if (istrue)
+                     {
+                         estado = 18;
+                     }
+
                      else //todo Error compartido de sintaxis 
                      {
                          addErrorSintac("Error sintax Metodo",1000,actual);
 
                      }
+                     //si detras no hay un ; error
 
                     break;
                     //!IGUALACION
                     case 15:
-                       if(actual == 162 || actual == 135)
+                       if(actual == 162 || actual == 141)
                        {
-                            //? igualacion = (variable 110) (: 162 || := 135) 
+                            //? igualacion = (variable 110) (: 162 || := 141) 
                             estado =16;
                        }
                        else
@@ -933,33 +947,102 @@ namespace editor_de_texto
 
                     case 16://todo Que va llegar despues de la igualacion
                         //? igualacion = (variable) (:|:=) (varaible) o numero o LETRA
-                       if(actual==110)//? llego una variable
+                        //? variable = 110   cadena = 101  numero = 102
+                       if(actual==110||actual==101||actual==102||actual==103||actual==104||actual ==105)
                        {
-                           estado =20;
+                           estado =17;
                            
+                       }
+                       else if(actual==150)//todo llego el parentesis
+                       {
+                           //parentesis_abre ++;
+                           //estado =16;
+                           estado=16;
+                           lista_parentesis_abre.Add(actual);
 
                        }
+                       else if(actual==151)//todo llego el parentesis que cierra
+                       {
+                          
+                               //parentisis_cierra ++;
+                               //estado = 16;
+                               estado=17;
+                               lista_parentesis_cierra.Add(actual);
+
+                       }
+                       //else if(actual==120 || actual==121||actual==122||actual==123)
+                       //{
+                         // estado = 20; //?varible mas un operador aritmetico + - / *
+                       //}
+                       //else if(actual ==161 )
+                       //{
+                         // estado =14;
+                       //}
+                      
+                       
+                       
                        else
                        {
                            addErrorSintac("Error sintax igualacion",1000,actual);
                            estado=999;
 
                        }
-                       //!FALTA APLICAR UN MENEOS MENOS
+                       
 
                     break;
 
-                    case 20:
-                      if(actual==161)
+                    case 17: 
+                      if(actual ==161 )
                       {
-                          estado =14; //se va regresar al estado de incio de metodo
+                          //todo comprovamos que sea igual la cantidad de parentesis que se abren y se cierran
+                          int abre = lista_parentesis_abre.Count;
+                          int cierra = lista_parentesis_cierra.Count;
+
+                          
+                          if(abre==cierra)
+                          {
+                              estado=14; //todo vuelve a un estado de inicio
+                          }
+                          else
+                          {
+                               addErrorSintac("ERROR PARENTESIS ",1000,actual);
+                          }
                       }
+
+                      else if(actual==120 || actual==121||actual==122||actual==123)
+                      {
+                          estado = 16; //?varible mas un operador aritmetico + - / *
+                      }
+                      else if(actual==150)//todo paraentesis que abre
+                      {
+                          estado=17;
+                           lista_parentesis_abre.Add(actual);
+
+                      }
+                      else if (actual==151)
+                      {
+                          estado=17;
+                          lista_parentesis_cierra.Add(actual);
+                      }
+                      
                       else 
                       {
-                          addErrorSintac("Se esperaba ;",1000,actual);
+                          addErrorSintac("Sintaxis error",1000,actual);
                           estado = 999;
                       }
 
+                    break;
+                    case 18://! Inicio el condicional if ( istrue)
+                    //condicional if = (istrue) "(" (expresion) ")" (preposicion)* ({) [(else)(preposicion) (}) (finish) ] }
+                     if(actual == 150)
+                     {
+                         estado =19;
+                     }
+                     else
+                     {
+                         addErrorSintac("Se esperaba ( ",1000,actual);
+                         estado =  9999;
+                     }
                     break;
 
 
@@ -969,7 +1052,16 @@ namespace editor_de_texto
         }
         
         
-          
+          public int parentesis_abre()
+          {
+              int total = lista_parentesis_abre.Count;
+              return total;
+          }
+          public int parentisis_cierra()
+          {
+              int total = lista_parentesis_cierra.Count;
+              return total;
+          }
 
         
         public bool comprobador(String sente)
@@ -991,7 +1083,7 @@ namespace editor_de_texto
         }
         public int verificar_reservada(string lexema) 
         {
-            string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","start" };
+            string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","start","istrue"};
             int encontrado = 0;
             for (int p  = 0; p < reservada.Length; p++)
             {
