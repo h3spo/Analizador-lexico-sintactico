@@ -681,6 +681,8 @@ namespace editor_de_texto
       //todo metodo para provar el conteo de los ()
        List<int> lista_parentesis_abre = new List<int>();
         List<int> lista_parentesis_cierra = new List<int>();
+         List<int> lista_condicional= new List<int>();
+          List<int> lista_condicional2= new List<int>();
        
 
 
@@ -912,7 +914,42 @@ namespace editor_de_texto
                      }
                      else if(actual==507)//todo llego un if (istrue)
                      {
-                         estado = 18;
+                         estado = 19;
+                     }
+                     else if(actual ==512)//todo finalizo un else
+                     {
+                         estado=14;
+                     }
+                     else if (actual == 513)//todo llego la llamada a un metodo
+                     {
+                         estado = 24;
+
+                     }
+                     else if(actual ==514)//todo se llamo a un ciclo while
+                     {
+                         estado = 29;
+                     }
+                     else if(actual==516)//todo finaliza ciclo while during
+                     {
+                         estado = 14;
+                     }
+                     else if(actual==517)//todo llego write input
+                     {
+                         estado=31;
+                     }
+                     else if(actual==518)//todo llego el read  line
+                     {
+                         estado = 33;
+                     }
+                     else if(actual==519)//todo llgo in Increases
+                     {
+                         estado = 35;
+
+                     }
+                     else if(actual==520)//todo llego un decremento
+                     {
+                         estado = 37;
+
                      }
 
                      else //todo Error compartido de sintaxis 
@@ -970,17 +1007,6 @@ namespace editor_de_texto
                                lista_parentesis_cierra.Add(actual);
 
                        }
-                       //else if(actual==120 || actual==121||actual==122||actual==123)
-                       //{
-                         // estado = 20; //?varible mas un operador aritmetico + - / *
-                       //}
-                       //else if(actual ==161 )
-                       //{
-                         // estado =14;
-                       //}
-                      
-                       
-                       
                        else
                        {
                            addErrorSintac("Error sintax igualacion",1000,actual);
@@ -1030,14 +1056,18 @@ namespace editor_de_texto
                           addErrorSintac("Sintaxis error",1000,actual);
                           estado = 999;
                       }
-
+                      
                     break;
+
+                     //! inicia el condicional if (istrue)
                     case 18://! Inicio el condicional if ( istrue)
                     //condicional if = (istrue) "(" (expresion) ")" (preposicion)* ({) [(else)(preposicion) (}) (finish) ] }
                      if(actual == 150)
                      {
                          estado =19;
+                         lista_parentesis_abre.Add(actual);
                      }
+                   
                      else
                      {
                          addErrorSintac("Se esperaba ( ",1000,actual);
@@ -1046,7 +1076,336 @@ namespace editor_de_texto
                     break;
 
 
+                    case 19:
+                       //?variable o numero
+                       if(actual==110||actual==101||actual==102||actual==103||actual==104||actual ==105)
+                       {
+                           estado =20;
+                           
+                       }
+                      else if(actual==150)//todo llego el parentesis
+                       {
+                           estado=19;
+                           lista_parentesis_abre.Add(actual);
+                       }
+                      else if (actual==151)//?se cierra parentesis
+                      {
+                          estado=20;
+                          lista_parentesis_cierra.Add(actual);
+                      }
+                     else if(actual==130||actual==131||actual==132||actual==133||actual==134||actual==135)
+                      {
+                          lista_condicional.Add(actual);
+                        estado=19;
+
+                      }
+                       else 
+                       {
+                           addErrorSintac("Error de condicion 1",1000,actual);
+                       }
+                      
+                    break;
+                    case 20:
+                     if(actual ==508 ) //todo da inicio lo que va dentro del if = st_istrue
+                      {
+                          //todo comprovamos que sea igual la cantidad de parentesis que se abren y se cierran
+                          int abre = lista_parentesis_abre.Count;
+                          int cierra = lista_parentesis_cierra.Count;
+                          int condicion = lista_condicional.Count;
+
+                          
+                          if(abre==cierra && condicion > 0 && condicion <= 2)
+                          {
+                              estado=21; //todo vuelve a un estado de inicio
+                          }
+                          else
+                          {
+                               addErrorSintac("ERROR PARENTESIS istrue ",1000,actual);
+                          }
+                      }
+                      else if(actual==120 || actual==121||actual==122||actual==123)
+                      {
+                          estado = 19; //?varible mas un operador aritmetico + - / *
+                      }
+                      else if (actual==151)//?se cierra parentesis
+                      {
+                          estado=19;
+                          lista_parentesis_cierra.Add(actual);
+                      }
+                       else if(actual==150)//todo llego el parentesis
+                       {
+                           estado=19;
+                           lista_parentesis_abre.Add(actual);
+                       }
+                    else if(actual==130||actual==131||actual==132||actual==133||actual==134||actual==135)
+                      {
+                        estado=19;
+                        lista_condicional.Add(actual);
+
+                      }
+                      else 
+                      {
+                          addErrorSintac("Error de condicion 2",1000,actual);
+                      }
+                    
+                    break;
+
+                    case 21:
+                     i--;
+                      if(actual==509)//todo fn_istrue
+                      {
+                          estado =22;
+                      }
+                      else
+                      {
+                          estado =14;
+                          lista_condicional.Clear();
+                      }
+
+                    break;
+                    //!else 
+                    case 22:
+                     if(actual==510)
+                     {
+                         estado =23;
+
+                     }
+
+                    break;
+
+                    case 23:
+                     if(actual==511)//todo st_else
+                     {
+                         estado = 14;
+                     }
+                     else if(actual==512) // todo fn_else
+                     {
+                         estado=14;
+                     }
+                     else 
+                     {
+                         addErrorSintac("Error en else",100,actual);
+                     }
+                     
+                    break;
+                    //!llamada al metodo
+                    case 24:
+                    if(actual==110)
+                    {
+                        estado  = 25;//llego el nombre del metodo
+                    }
+                    else
+                    {
+                        addErrorSintac("Error llamada al metodo",1000,actual);
+                    }
+                    break;
+                    case 25:
+                    if(actual==150)
+                    {
+                        estado=26;  //function nombre ( sa)
+                    }
+                    else
+                    {
+                        addErrorSintac("se esperaba ( ",1000,actual);
+                    }
+                    break;
+                    case 26:
+                     if(actual==110)
+                     {
+                         estado=27;
+                     }
+                     else
+                     {
+                         addErrorSintac("se esperaba una variable",1000,actual);
+                     }
+                    break;
+                    case 27:
+                     if(actual==160)
+                     {
+                         estado = 26;
+                     }
+                     else if (actual==151)
+                     {
+                         estado = 28;
+                     }
+                     else 
+                     {
+                         addErrorSintac("Error .llamada al metodo",1000,actual);
+                     }
+                    break;
+                   case 28:
+                    if(actual==161)
+                    {
+                        estado = 14;
+                    }
+                    else
+                    {
+                        addErrorSintac("Se esperaba ; ",1000,actual);
+                    }
+                   break;
+                   //!CICLO WHILE
+                  //TODO Ciclo while = { (during) (expresion) st_durin (preposicion) (fn_during) (;) }
+                  case 29:
+                   //?variable o numero
+                       if(actual==110||actual==101||actual==102||actual==103||actual==104||actual ==105)
+                       {
+                           estado =30;
+                           
+                       }
+                      else if(actual==150)//todo llego el parentesis
+                       {
+                           estado=29;
+                           lista_parentesis_abre.Add(actual);
+                       }
+                      else if (actual==151)//?se cierra parentesis
+                      {
+                          estado=30;
+                          lista_parentesis_cierra.Add(actual);
+                      }
+                     else if(actual==130||actual==131||actual==132||actual==133||actual==134||actual==135)
+                      {
+                          lista_condicional.Add(actual);
+                        estado=29;
+
+                      }
+                       else 
+                       {
+                           addErrorSintac("Error de while 1",1000,actual);
+                       }
+                      
+                  break;
+                  case 30:
+                  if(actual ==515 ) //todo da inicio lo que va dentro del while = st_during
+                      {
+                          //todo comprovamos que sea igual la cantidad de parentesis que se abren y se cierran
+                          int abre = lista_parentesis_abre.Count;
+                          int cierra = lista_parentesis_cierra.Count;
+                          //int condicion = lista_condicional.Count;
+
+                          
+                          if(abre==cierra )
+                          {
+                              estado=14; //todo vuelve a un estado de inicio
+                          }
+                          else
+                          {
+                               addErrorSintac("ERROR PARENTESIS istrue ",1000,actual);
+                          }
+                      }
+                      else if(actual==120 || actual==121||actual==122||actual==123)
+                      {
+                          estado = 29; //?varible mas un operador aritmetico + - / *
+                      }
+                      else if (actual==151)//?se cierra parentesis
+                      {
+                          estado=29;
+                          lista_parentesis_cierra.Add(actual);
+                      }
+                       else if(actual==150)//todo llego el parentesis
+                       {
+                           estado=29;
+                           lista_parentesis_abre.Add(actual);
+                       }
+                    else if(actual==130||actual==131||actual==132||actual==133||actual==134||actual==135)
+                      {
+                        estado=29;
+                        lista_condicional.Add(actual);
+
+                      }
+                      else 
+                      {
+                          addErrorSintac("Error de while 2",1000,actual);
+                      }
+                  break;
+                  //!inicioa write input
+                  case 31:
+                     if(actual==110||actual == 101)
+                     {
+                         estado = 32;
+                     }
+                     else 
+                     {
+                         addErrorSintac("Error de salida",1000,actual);
+                     }
+
+                  break;
+                  case 32:
+                  if(actual == 161)
+                  {
+                      estado =14;
+                  }
+                  else 
+                  {
+                      addErrorSintac("Error de salida 2",1000,actual);
+                  }
+                  break;
+                  case 33:
+                   if(actual==110||actual == 101||actual ==102||actual==103)
+                     {
+                         estado = 34;
+                     }
+                     else 
+                     {
+                         addErrorSintac("Error de entrada",1000,actual);
+                     }
+                  break;
+                  case 34:
+                  if(actual == 161)
+                  {
+                      estado =14;
+                  }
+                  else 
+                  {
+                      addErrorSintac("Error de entrada 2",1000,actual);
+                  }
+                  break;
+                  //!Increases
+                  case 35:
+                  if(actual == 110)
+                  {
+                      estado =36;
+                  }
+                  else
+                  {
+                      addErrorSintac("Error de incremento",1000,actual);
+                  }
+                  break;
+                  case 36:
+                  if(actual==161)
+                  {
+                      estado=14;
+                  }
+                  else
+                  {
+                      addErrorSintac("Error de incremento 2",1000,actual);
+
+                  }
+                  break;
+                  //! decremento
+                  case 37:
+                   if(actual == 110)
+                  {
+                      estado =38;
+                  }
+                  else
+                  {
+                      addErrorSintac("Error de decremento",1000,actual);
+                  }
+                  break;
+                  case 38:
+                 if(actual==161)
+                  {
+                      estado=14;
+                  }
+                  else
+                  {
+                      addErrorSintac("Error de decremento 2",1000,actual);
+
+                  }
+
+                  break;
                 }
+                
             }
             
         }
@@ -1083,7 +1442,8 @@ namespace editor_de_texto
         }
         public int verificar_reservada(string lexema) 
         {
-            string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","start","istrue"};
+            string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","st_procedure","istrue","st_istrue","fn_istrue","else","st_else","fn_else",
+            "function","during","st_during","fn_during","write_input","read_output","increases","decrease"};
             int encontrado = 0;
             for (int p  = 0; p < reservada.Length; p++)
             {

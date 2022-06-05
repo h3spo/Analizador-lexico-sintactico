@@ -6,10 +6,13 @@
         |Palabras reservadas____________|500_______|
         |variables    __________________|110_______|
         |CADENAS------------------------|101-------|
+        |enter -------------------------|1---------|
 
 
-        |numero-------------------------|110-------|
-        |numero decimal-----------------|111-------|
+        |numero-------------------------|102-------|
+        |numero decimal-----------------|103-------|
+        |ala n -------------------------|104-------|
+        |ala -n-------------------------|105-------|
 
 
         -------------OPeradores aritmeticos--------
@@ -52,6 +55,22 @@
         |decim--------------------------|503---------|
         |text---------------------------|504---------|
         |procedure----------------------|505---------|
+        |st_procedure-------------------|506---------|
+        |istrue-------------------------|507---------|
+        |st_istrue----------------------|508---------|
+        |fn_istrue----------------------|509---------|
+        |else---------------------------|510---------|
+        |st_else------------------------|511---------|
+        |fn_else------------------------|512---------|
+        |function-----------------------|513---------|
+        |during-------------------------|514---------|
+        |st_during----------------------|515---------|
+        |fn_during----------------------|516---------|
+        |write_input--------------------|517---------|
+        |read_outpu--------------------|518---------|
+        |Increases----------------------|519----------|
+        |decrease-----------------------|520----------|
+
 
         
 
@@ -64,34 +83,46 @@
         Reglas
         
 varaible = {(vare) (:)  (inter|decim|text) (varaible) (;)}
+finish
 
 
 Ciclo while = { (during) (expresion) (preposicion) (finish) (;) }
+finish
 
-condicional if = (istrue) "(" (expresion) ")" (preposicion)* ({) [(else)(preposicion) (}) (finish) ] }
+condicional if = (istrue) "(" (expresion) (st_istrue) (preposicion)* (fn_istrue) [(else)  (preposicion) (}) (finish) ] }
+finish
 
-write Line = { (write input)(cadena|variable) }
+write Line = { (write_input)(cadena|variable) (;) }
+finish
 
-read line = { (write output) (cadena | variable) }
+read line = { (write output) (cadena | variable) (;)}
+finish
 
 Incremento = { (Increases) (variable) (;) }
+finish
 
-Decremento = { (Decrease) (variable) (;) }
+Decremento = { (decrease) (variable) (;) }
+finish
 
-llamada al metodo = { (function)(varaible)"(" (variable)* ")"(;) }
+llamada al metodo = { (function)(varaible) "(" (variable)* ")"(;) }
+finish
 
 
-metodo= { (procedure)(variable)"("(()variable(,)*)* ")"(start)(proposicion)*(finish)(;)}
+metodo= { (procedure)(variable)"("(()variable(,)*)* ")"(st_procedure)(proposicion)*(finish)(;)}
+*hasta proposicion
 
-preposicon= { (igualacion)|(cond if)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
+preposicon= { (igualacion)|(cond if)(else)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
 
 expresion = {(exp-simple)(operadores)(ep-simple)[y ,or]*}
 
 expresion simple ={"(" (exp-simple) ")" [+|-|*|/] |(exp-simple) (operacion)[+|-|*|/](expresion-simple)}
 
 cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicion)*(ended)(term) }
+*hasta metodo
  #Jesus fabiel Partida camacho
 
+
+igulacion  = (varaible) (:|:=) (varaible) o numero o LETRA 
 
 
 
@@ -125,3 +156,8 @@ cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicio
         
 
         */
+
+        variable = variable + varaible + numero / numero;
+        varaible =variable ((numero * numero)/varaible)
+
+        if((algo / algo) > algo  ) 

@@ -1,12 +1,29 @@
 started nombre
 vare :  inter  nombre ;
-vare : decim nombre2 ;
-vare  : text nombre3 ;
-
 procedure nombre (nombre , nombre )
-start
-variable : hola;
-variable : "ola";
-varaible : ola + 1 - ola * 1e1 / 1.2;
-varaible : asd + (a - 1 * (a - 12.1)) + a ;
-istrue (sdasd
+st_procedure
+    variable : hola;
+    variable : "ola";
+    varaible : ola + 1 - ola * 1e1 / 1.2;
+    varaible : asd + (a - 1 * (a - 12.1)) + a ;
+    istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+      st_istrue
+           variable: hola ;
+           istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+           st_istrue
+
+           fn_istrue
+        
+      fn_istrue
+      else
+       st_else
+         varaible : o;
+          istrue a > q
+          st_istrue
+
+          fn_istrue
+        fn_else
+
+
+        
+
