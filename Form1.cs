@@ -136,7 +136,7 @@ namespace editor_de_texto
             data_tokens.DataSource = obj_analizador.listado();
             //richTextBox1.Text = obj_analizador.getRetorno();
             data_errores.DataSource = obj_analizador.listado_errores();
-            listBox1.DataSource = obj_analizador.lista_pila();
+           // listBox1.DataSource = obj_analizador.lista_pila();
             obj_analizador.analisis_sintactico();
             dataGridView1.DataSource = obj_analizador.listado_erroresSintac();
             //dataGridView1.DataSource= obj_analizador.listado_erroresSintac();
@@ -200,7 +200,7 @@ namespace editor_de_texto
             //data_tokens.DataSource = obj_analizador.listado();
             //richTextBox1.Text = obj_analizador.getRetorno();
             List<int> tokens = new List<int>();
-            tokens.Add(listBox1.Items.Count);
+           // tokens.Add(listBox1.Items.Count);
             
             obj_analizador.analisis_sintactico();
             
