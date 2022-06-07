@@ -1,29 +1,117 @@
 started nombre
-vare :  inter  nombre ;
-procedure nombre (nombre , nombre )
+vare : inter nombre;
+procedure metodo (nombre)
 st_procedure
-    variable : hola;
-    variable : "ola";
-    varaible : ola + 1 - ola * 1e1 / 1.2;
-    varaible : asd + (a - 1 * (a - 12.1)) + a ;
-    istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
-      st_istrue
-           variable: hola ;
+variable : asd + (a - 1 * (a - 12.1)) + a ;
+istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_istrue
+variable : ola ;
+decrease ola ;
            istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
            st_istrue
-
+            variable : A + 12 *(a-(a-a)); 
            fn_istrue
-        
-      fn_istrue
-      else
-       st_else
-         varaible : o;
-          istrue a > q
-          st_istrue
+fn_istrue
+else
+st_else
+  variable :12;
+fn_else
+else
+st_else
+fn_else
+read_output asd;
+function metodo (a,a);
 
-          fn_istrue
-        fn_else
+during (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_during
+hola :hola +1 ;
+fn_during
+write_input ola ;
+
+fn_procedure
 
 
-        
+
+ 
+
+ started nombre
+vare : inter nombre;
+procedure metodo(variable)
+st_procedure
+variable :  asd + (a - 1 * (a - 12.1)) + a ;
+istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_istrue
+variable : hola;
+read_output   variable;
+fn_istrue
+else
+during (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_during
+hola : hola  + 12 ;
+write_input varaiable;
+fn_during
+
+
+
+
+
+
+
+started nombre
+vare : inter nombre;
+procedure metodo(variable)
+st_procedure
+variable :  asd + (a - 1 * (a - 12.1)) + a ;
+istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_istrue
+variable : hola;
+function metodo (a,a);
+read_output   variable;
+function metodo (a,a);
+fn_istrue
+during (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_during
+hola : hola  + 12 ;
+write_input varaiable;
+fn_during
+
+
+
+
+
+started nombre
+vare : inter nombre;
+procedure metodo(variable)
+st_procedure
+variable :  asd + (a - 1 * (a - 12.1)) + a ;
+istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_istrue
+variable : hola;
+function metodo (a,a);
+read_output   variable;
+function metodo (a,a);
+fn_istrue
+else
+st_else
+function metodo (a,a);
+fn_else
+during (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_during
+hola : hola  + 12 ;
+write_input varaiable;
+fn_during
+fn_procedure
+procedure metodo2 (variable)
+st_procedure
+during (a-b) < b+ 2
+st_during
+hola : hola  + 12 ;
+istrue (a + (ola - 1)) >  a + (q - (asd + 1)) - a - 5
+st_istrue
+function metodo (a,a);
+fn_istrue
+fn_during
+fn_procedure
+endterm
+
 

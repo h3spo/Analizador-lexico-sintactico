@@ -70,59 +70,88 @@
         |read_outpu--------------------|518---------|
         |Increases----------------------|519----------|
         |decrease-----------------------|520----------|
+        |fn_procedure-------------------|521----------|
+        |endterm------------------------|522----------|
 
 
         
+-----------IDENTIFICADOR PARA ERROR-----------------------------------
+----------------------------------------------------------------------
+NUMERO DE ERROR|UBICACION case| DESCRIPCION__________________________________________|
+---------------|-----------------------------------------------------|
+|1000----------|14------------|No se se resivio un token que sea aceptado 
+|1001----------|15------------|se espera una igualacion
+|1002----------|16------------|llego un token no valido
+|1003----------|17------------|error en conteo de parentesis
+|1004----------|17------------|caracter no valido en esa proposicion
+|1005----------|18------------|falta el parentesis que abre
+|1006----------|19------------|Error de condicion en paso 1de istrue
+|1007----------|20------------|Error de parentesis en istrue 
+|1008----------|20------------|Error de condicion en paso 2 de istrue
+|1009----------|22------------|Error de else paso 1
+|1010----------|24------------|Error llamada al metodo
+|1011----------|24------------|Se espera parentesis
+|1012----------|26------------|espera una variable
+|1013----------|27------------|Error de llamada al metodo
+|1014----------|28------------|Se esperaba punto y compa
+|1015----------|29------------|Error de condicion de during paso 1
+|1016----------|30------------|Error de paraentesis during
+|1017----------|30------------|Error de condicion de during paso 1
+|1018----------|31------------|Error de write input
+|1019----------|32------------|Error de write_input despues de reservada
+|1020----------|33------------|Error de read_output
+|1021----------|34------------|Error de read_output despues de reservada
+|1022----------|35------------|Error de increases 
+|1023----------|36------------|Error de increases despues de reservada
+|1024----------|37------------|Error de incremento
+|1025----------|38------------|error de incremento despues de la reservada
+|1026----------|0-------------|error de incio de programa
+|1027----------|1-------------|espera un nombre
+|1028----------|2-------------|se espera vare
+|1029----------|3-------------|error de igualacion
+|1030----------|4-------------|esperaba un tipo de varaiable
+|1031----------|5-------------|se espera un nombre
+|1032----------|6-------------|se espero punto y coma 
+|1033----------|7-------------|se esperaba llamada a un metodo
+|1034----------|8-------------|se espera un nombre
+|1035----------|9-------------|se esperaba parentesis que abre
+|1036----------|10------------|se esperaba una varaiable
+|1037----------|11------------|error de proposicion
+|1038----------|12------------|se esperaba parentesis que cierra
+|1039----------|13------------|se esperaba un st de metodo
+
+NOTAS
+los istrue y during se usan 2 pasos para controlar parentesis y la sintaxis 
+de las operaciones
+                      
+
+el modo de ANASIS de la llegada de los tokens es por medio de estados se va hacia arriba un estato mayor o retrocede estado menor 
 
 
 
 
         REAGLAS PARA EL ANASIS DE  DE SINTAXIS 
 
-
-        Reglas
-        
-varaible = {(vare) (:)  (inter|decim|text) (varaible) (;)}
-finish
-
-
-Ciclo while = { (during) (expresion) (preposicion) (finish) (;) }
-finish
-
-condicional if = (istrue) "(" (expresion) (st_istrue) (preposicion)* (fn_istrue) [(else)  (preposicion) (}) (finish) ] }
-finish
-
-write Line = { (write_input)(cadena|variable) (;) }
-finish
-
-read line = { (write output) (cadena | variable) (;)}
-finish
-
-Incremento = { (Increases) (variable) (;) }
-finish
-
-Decremento = { (decrease) (variable) (;) }
-finish
-
-llamada al metodo = { (function)(varaible) "(" (variable)* ")"(;) }
-finish
-
-
-metodo= { (procedure)(variable)"("(()variable(,)*)* ")"(st_procedure)(proposicion)*(finish)(;)}
-*hasta proposicion
-
-preposicon= { (igualacion)|(cond if)(else)|ciclo while)|(read line)| write line)|(inc-dec)|(llamada metodo) }
-
+|||||||||||REAGLAS||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+variable = vare +  : (inter|decim|text)  + (nombre) + (;)
 expresion = {(exp-simple)(operadores)(ep-simple)[y ,or]*}
-
-expresion simple ={"(" (exp-simple) ")" [+|-|*|/] |(exp-simple) (operacion)[+|-|*|/](expresion-simple)}
-
-cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicion)*(ended)(term) }
-*hasta metodo
- #Jesus fabiel Partida camacho
-
-
+expresion simple ={ (exp-simple) | [+|-|*|/] |(exp-simple) (operacion)[+|-|*|/](expresion-simple)} 
+ciclo while = during + (expresion) +(st_during)+ (preposicion) + (fn_during)      
+condicional if = (istrue) + (expresion) + (st_istrue) + (preposicion) (fn_istrue) + opcional + (else) + (st_else) + (preposicion) + (fn_else) }
+write Line = { (write_input)+(cadena|variable)+ (;) }
+read line = { (write output) (cadena | variable) (;)}
+Incremento = { (Increases) (variable) (;) }
+Decremento = { (decrease) (variable) (;) }
+llamada al metodo = { (function)(varaible) "(" (variable)* ")"(;) }
+metodo= { (procedure)+ (nombre) + (() + variable* + ()) + (st_procedure)(proposicion)+(fn_procedure)}
+*hasta proposicion
+preposicon= { (igualacion)|(istrue)(else)|during)|(read line)| write line)|(inc-dec)|(llamada metodo) }
+cuerpo-principal={ (started)(varaible)(declaracion)(metodo)*(started)(preposicion)*(endterm) }
 igulacion  = (varaible) (:|:=) (varaible) o numero o LETRA 
+
+
+
+Partida camacho jesus fabiel
 
 
 

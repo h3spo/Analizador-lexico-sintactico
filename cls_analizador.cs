@@ -704,25 +704,25 @@ namespace editor_de_texto
                 {
                     case 0:
                          
-                        if (actual==500)
+                        if (actual==500)//todo llego la reservada de incio
                         {
                             
                             estado = 1;   
                         }
                         else 
                         {
-                            addErrorSintac("Se esperaba started" ,1001,actual);
+                            addErrorSintac("Syntax error" ,1026,actual);
                             estado =99;
                         }
                         break;
                     case 1:
-                        if (actual == 110)
+                        if (actual == 110) //todo llego un nombre
                         {
                             estado = 2;
                         }
                         else
                         {
-                            addErrorSintac("Se esperaba un nombre", 1000, actual);
+                            addErrorSintac("Syntax error", 1027, actual);
                             estado = 99;
                         }
                         break;
@@ -736,7 +736,7 @@ namespace editor_de_texto
                         }
                         else
                         {
-                            addErrorSintac("Se esperaba vare",1000,actual);
+                            addErrorSintac("Syntax error",1028,actual);
                             estado =999;
                         }
                     break;
@@ -748,7 +748,7 @@ namespace editor_de_texto
                         }
                         else
                         {
-                          addErrorSintac("Se esperaba :",1000, actual);
+                          addErrorSintac("Syntax error",1029, actual);
                           estado =999;
                         }
                     break;
@@ -761,7 +761,7 @@ namespace editor_de_texto
                         }
                         else
                         {
-                            addErrorSintac("Se esperaba un tipo",1000, actual);
+                            addErrorSintac("Syntax error",1030, actual);
                             estado =999;
                         }
                     break;
@@ -773,7 +773,7 @@ namespace editor_de_texto
                         }
                         else 
                         {
-                            addErrorSintac("Se esperaba un Nombre", 1000,actual);
+                            addErrorSintac("Syntax error", 1031,actual);
                             estado =999;
                         }
                     break;
@@ -785,12 +785,14 @@ namespace editor_de_texto
                         }
                         else
                         {
-                            addErrorSintac("Se esperaba ;",1000,actual);
+                            addErrorSintac("Syntax error ",1032,actual);
                             estado = 999;
                         }
                     break;
                     //todo repetimos todo el proceso de nuevo por si llegan mas declariciones de variables
-                    case 7:
+                    case 7://todo estado incial de todo
+
+
                         if(actual == 501)
                         {
                             i--;
@@ -807,7 +809,7 @@ namespace editor_de_texto
                         else 
                         {
                             //!MODIFICAR ESTA ESPERANDO A QUE SI GUE DE DECLARACION DE VARIABLES
-                            addErrorSintac("se esperaba la llamada a un metodo ",1000, actual);
+                            addErrorSintac("Syntax error ",1033, actual);
                             estado = 999;
                         }
                     break;
@@ -821,7 +823,7 @@ namespace editor_de_texto
                          }
                         else 
                         {
-                            addErrorSintac("Se esperaba un nombre",1000,actual);
+                            addErrorSintac("Syntax error",1034,actual);
                             estado = 999;
                         }
                     
@@ -836,7 +838,7 @@ namespace editor_de_texto
                       }
                       else 
                       {
-                          addErrorSintac("Se esperaba ( ",1000,actual);
+                          addErrorSintac("Syntax error",1035,actual);
                           estado = 999;
                       }
                     break;
@@ -850,7 +852,7 @@ namespace editor_de_texto
                     
                     else
                     {
-                        addErrorSintac("se espera una variable",1000,actual);
+                        addErrorSintac("Syntax error",1036,actual);
                         estado=999;
                     }
                     break;
@@ -866,7 +868,7 @@ namespace editor_de_texto
                       else 
                       {  if(actual != 151)
                          {
-                             addErrorSintac("Error Sintax",1000,actual);
+                             addErrorSintac("Syntax error",1037,actual);
                          }
                          else
                          {
@@ -887,7 +889,7 @@ namespace editor_de_texto
                      }
                      else
                      {
-                         addErrorSintac("Se esperaba )",1000,actual);
+                         addErrorSintac("Syntax error",1038,actual);
                      }
                     break;
                     case 13:
@@ -899,7 +901,7 @@ namespace editor_de_texto
                        }
                        else
                        {
-                           addErrorSintac ("Se esperaba start",1000,actual);
+                           addErrorSintac ("Syntax error",1039,actual);
                            estado = 999;
                        }
                     break;
@@ -912,9 +914,21 @@ namespace editor_de_texto
                      {
                          estado = 15;
                      }
+                     else if(actual == 521) //todo termina el metodo
+                     {
+                         estado =39;
+                     }
                      else if(actual==507)//todo llego un if (istrue)
                      {
                          estado = 19;
+                     }
+                     else if(actual==509)//todo llego un fn_istrue finalizo un if
+                     {
+                         estado = 14;
+                     }
+                     else if(actual==510)//todo llego un else 
+                     {
+                         estado=22;
                      }
                      else if(actual ==512)//todo finalizo un else
                      {
@@ -951,10 +965,11 @@ namespace editor_de_texto
                          estado = 37;
 
                      }
+                    
 
                      else //todo Error compartido de sintaxis 
                      {
-                         addErrorSintac("Error sintax Metodo",1000,actual);
+                         addErrorSintac("Syntax error",1000,actual);
 
                      }
                      //si detras no hay un ; error
@@ -969,7 +984,7 @@ namespace editor_de_texto
                        }
                        else
                        {
-                           addErrorSintac("Se esperaba una igualacion",1000,actual);
+                           addErrorSintac("Syntax error",1001,actual);
                        }
 
                     break;
@@ -1009,7 +1024,7 @@ namespace editor_de_texto
                        }
                        else
                        {
-                           addErrorSintac("Error sintax igualacion",1000,actual);
+                           addErrorSintac("Syntax error",1002,actual);
                            estado=999;
 
                        }
@@ -1031,8 +1046,13 @@ namespace editor_de_texto
                           }
                           else
                           {
-                               addErrorSintac("ERROR PARENTESIS ",1000,actual);
+                               addErrorSintac("Syntax error",1003,actual);
                           }
+                      }
+
+                      else if(actual==521)
+                      {
+                          estado = 39;
                       }
 
                       else if(actual==120 || actual==121||actual==122||actual==123)
@@ -1053,7 +1073,7 @@ namespace editor_de_texto
                       
                       else 
                       {
-                          addErrorSintac("Sintaxis error",1000,actual);
+                          addErrorSintac("Syntax error",1003,actual);
                           estado = 999;
                       }
                       
@@ -1070,7 +1090,7 @@ namespace editor_de_texto
                    
                      else
                      {
-                         addErrorSintac("Se esperaba ( ",1000,actual);
+                         addErrorSintac("Syntax error ",1005,actual);
                          estado =  9999;
                      }
                     break;
@@ -1101,7 +1121,7 @@ namespace editor_de_texto
                       }
                        else 
                        {
-                           addErrorSintac("Error de condicion 1",1000,actual);
+                           addErrorSintac("Syntax error",1006,actual);
                        }
                       
                     break;
@@ -1111,17 +1131,25 @@ namespace editor_de_texto
                           //todo comprovamos que sea igual la cantidad de parentesis que se abren y se cierran
                           int abre = lista_parentesis_abre.Count;
                           int cierra = lista_parentesis_cierra.Count;
-                          int condicion = lista_condicional.Count;
+                        
 
                           
-                          if(abre==cierra && condicion > 0 && condicion <= 2)
+                          if(abre==cierra )
                           {
-                              estado=21; //todo vuelve a un estado de inicio
+                              estado=14; //todo vuelve a un estado de inicio
                           }
                           else
                           {
-                               addErrorSintac("ERROR PARENTESIS istrue ",1000,actual);
+                               addErrorSintac("Syntax error",1007,actual);
                           }
+                      }
+                      else if(actual==521)
+                      {
+                          estado =39;
+                      }
+                      else if(actual==509)//todo fn_istrue
+                      {
+                          estado = 21;
                       }
                       else if(actual==120 || actual==121||actual==122||actual==123)
                       {
@@ -1145,46 +1173,62 @@ namespace editor_de_texto
                       }
                       else 
                       {
-                          addErrorSintac("Error de condicion 2",1000,actual);
+                          addErrorSintac("Syntax error",1008,actual);
                       }
                     
                     break;
 
                     case 21:
-                     i--;
-                      if(actual==509)//todo fn_istrue
+                      //i--;
+                      if(actual==510)//todo llego un else
                       {
-                          estado =22;
+                          estado=22;
+                      }
+                      else if(actual==521)
+                      {
+                          estado =39;
                       }
                       else
                       {
-                          estado =14;
-                          lista_condicional.Clear();
+                           estado =14;
+                          //lista_condicional.Clear();
+                            //addErrorSintac("Error else2",100,actual);
                       }
+
 
                     break;
                     //!else 
                     case 22:
-                     if(actual==510)
+                    
+                     if(actual==511)//todo st_else
                      {
                          estado =23;
 
+                     }
+                     else
+                     {
+                         addErrorSintac("Syntax error",1009,actual);
                      }
 
                     break;
 
                     case 23:
-                     if(actual==511)//todo st_else
+                     if(actual==512)//todo fn_else
                      {
+                         
                          estado = 14;
                      }
-                     else if(actual==512) // todo fn_else
+
+                     else if(actual==521)
                      {
-                         estado=14;
+                         estado = 39;
                      }
+                    
                      else 
                      {
-                         addErrorSintac("Error en else",100,actual);
+                         i--;
+                         estado =14;
+                        // addErrorSintac("Error en else",100,actual);
                      }
                      
                     break;
@@ -1196,7 +1240,7 @@ namespace editor_de_texto
                     }
                     else
                     {
-                        addErrorSintac("Error llamada al metodo",1000,actual);
+                        addErrorSintac("Sintax error",1010,actual);
                     }
                     break;
                     case 25:
@@ -1206,7 +1250,7 @@ namespace editor_de_texto
                     }
                     else
                     {
-                        addErrorSintac("se esperaba ( ",1000,actual);
+                        addErrorSintac("Syntax error",1011,actual);
                     }
                     break;
                     case 26:
@@ -1216,7 +1260,7 @@ namespace editor_de_texto
                      }
                      else
                      {
-                         addErrorSintac("se esperaba una variable",1000,actual);
+                         addErrorSintac("Syntax error",1012,actual);
                      }
                     break;
                     case 27:
@@ -1230,7 +1274,7 @@ namespace editor_de_texto
                      }
                      else 
                      {
-                         addErrorSintac("Error .llamada al metodo",1000,actual);
+                         addErrorSintac("Syntax error",1013,actual);
                      }
                     break;
                    case 28:
@@ -1238,9 +1282,13 @@ namespace editor_de_texto
                     {
                         estado = 14;
                     }
+                    else if(actual==521)
+                    {
+                        estado =39;
+                    }
                     else
                     {
-                        addErrorSintac("Se esperaba ; ",1000,actual);
+                        addErrorSintac("Syntax error",1014,actual);
                     }
                    break;
                    //!CICLO WHILE
@@ -1270,7 +1318,7 @@ namespace editor_de_texto
                       }
                        else 
                        {
-                           addErrorSintac("Error de while 1",1000,actual);
+                           addErrorSintac("Syntax error",1015,actual);
                        }
                       
                   break;
@@ -1289,8 +1337,12 @@ namespace editor_de_texto
                           }
                           else
                           {
-                               addErrorSintac("ERROR PARENTESIS istrue ",1000,actual);
+                               addErrorSintac("Syntax error",1017,actual);
                           }
+                      }
+                      else if(actual ==521)
+                      {
+                          estado=39;
                       }
                       else if(actual==120 || actual==121||actual==122||actual==123)
                       {
@@ -1298,7 +1350,7 @@ namespace editor_de_texto
                       }
                       else if (actual==151)//?se cierra parentesis
                       {
-                          estado=29;
+                          estado=30;
                           lista_parentesis_cierra.Add(actual);
                       }
                        else if(actual==150)//todo llego el parentesis
@@ -1314,7 +1366,7 @@ namespace editor_de_texto
                       }
                       else 
                       {
-                          addErrorSintac("Error de while 2",1000,actual);
+                          addErrorSintac("Syntax error",1017,actual);
                       }
                   break;
                   //!inicioa write input
@@ -1325,7 +1377,7 @@ namespace editor_de_texto
                      }
                      else 
                      {
-                         addErrorSintac("Error de salida",1000,actual);
+                         addErrorSintac("Syntax error",1018,actual);
                      }
 
                   break;
@@ -1334,9 +1386,13 @@ namespace editor_de_texto
                   {
                       estado =14;
                   }
+                  else if(actual==521)
+                  {
+                      estado = 39;
+                  }
                   else 
                   {
-                      addErrorSintac("Error de salida 2",1000,actual);
+                      addErrorSintac("Syntax error",1019,actual);
                   }
                   break;
                   case 33:
@@ -1346,7 +1402,7 @@ namespace editor_de_texto
                      }
                      else 
                      {
-                         addErrorSintac("Error de entrada",1000,actual);
+                         addErrorSintac("Syntax error",1020,actual);
                      }
                   break;
                   case 34:
@@ -1354,9 +1410,13 @@ namespace editor_de_texto
                   {
                       estado =14;
                   }
+                  else if(actual==521)
+                  {
+                      estado=39;
+                  }
                   else 
                   {
-                      addErrorSintac("Error de entrada 2",1000,actual);
+                      addErrorSintac("Syntax error",1021,actual);
                   }
                   break;
                   //!Increases
@@ -1367,7 +1427,7 @@ namespace editor_de_texto
                   }
                   else
                   {
-                      addErrorSintac("Error de incremento",1000,actual);
+                      addErrorSintac("Syntax error",1022,actual);
                   }
                   break;
                   case 36:
@@ -1375,9 +1435,13 @@ namespace editor_de_texto
                   {
                       estado=14;
                   }
+                  else if(actual==521)
+                  {
+                      estado=39;
+                  }
                   else
                   {
-                      addErrorSintac("Error de incremento 2",1000,actual);
+                      addErrorSintac("Syntax error",1023,actual);
 
                   }
                   break;
@@ -1389,7 +1453,7 @@ namespace editor_de_texto
                   }
                   else
                   {
-                      addErrorSintac("Error de decremento",1000,actual);
+                      addErrorSintac("Syntax error",1024,actual);
                   }
                   break;
                   case 38:
@@ -1397,14 +1461,32 @@ namespace editor_de_texto
                   {
                       estado=14;
                   }
+                  else if(actual==521)
+                  {
+                      estado=39;
+                  }
                   else
                   {
-                      addErrorSintac("Error de decremento 2",1000,actual);
+                      addErrorSintac("Syntax",1025,actual);
 
                   }
 
                   break;
+                  case 39:
+                  if(actual==522)//TODO TERMINO EL PROGRAMA CON EXITO
+                  {
+                      estado =40;
+                  }
+                  else 
+                  {
+                      i --;
+                      estado=7;
+                  }
+
+                  break;
                 }
+
+                
                 
             }
             
@@ -1442,8 +1524,9 @@ namespace editor_de_texto
         }
         public int verificar_reservada(string lexema) 
         {
+            //!MOVER EL ORDEN DE LAS RESERVADAS AFECTA TODO LAS CONDICIONES
             string[] reservada = { "started","vare", "inter", "decim", "text" ,"procedure","st_procedure","istrue","st_istrue","fn_istrue","else","st_else","fn_else",
-            "function","during","st_during","fn_during","write_input","read_output","increases","decrease"};
+            "function","during","st_during","fn_during","write_input","read_output","increases","decrease","fn_procedure","endterm"};
             int encontrado = 0;
             for (int p  = 0; p < reservada.Length; p++)
             {
