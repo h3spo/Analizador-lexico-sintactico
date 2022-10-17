@@ -131,19 +131,31 @@ namespace editor_de_texto
         {
             string texto = rich_principal.Text;
             cls_analizador obj_analizador = new cls_analizador();
+           //cls_main obj_analizador = new cls_main();
             obj_analizador.analizar_Cadena(texto);
             //obj_analizador.generarLista();
             data_tokens.DataSource = obj_analizador.listado();
             //richTextBox1.Text = obj_analizador.getRetorno();
             data_errores.DataSource = obj_analizador.listado_errores();
-           // listBox1.DataSource = obj_analizador.lista_pila();
+            listBox1.DataSource = obj_analizador.lista_pila();
+            listBox2.DataSource = obj_analizador.listalexemas();
+            
             obj_analizador.analisis_sintactico();
+            obj_analizador.Errores_Variables();
+
+            list_posfijo.DataSource = obj_analizador.lista_posfijo();
+            // obj_analizador.variables_duplicadas();
             dataGridView1.DataSource = obj_analizador.listado_erroresSintac();
+            data_variables.DataSource= obj_analizador.listado_Variables();
             //dataGridView1.DataSource= obj_analizador.listado_erroresSintac();
             label3.Text=Convert.ToString( "Numero de caracteres--" +  obj_analizador.elementos_lista());
             label4.Text=Convert.ToString("Parenthesis abiertos---"+obj_analizador.parentesis_abre());
             label5.Text=Convert.ToString("Parenthesis cerrados---"+ obj_analizador.parentisis_cierra());
             
+
+           listBox3.DataSource= obj_analizador.listavariablesx();
+           
+          
             
 
         }
@@ -195,17 +207,12 @@ namespace editor_de_texto
         {
 
 
+          
             cls_analizador obj_analizador = new cls_analizador();
-
-            //data_tokens.DataSource = obj_analizador.listado();
-            //richTextBox1.Text = obj_analizador.getRetorno();
-            List<int> tokens = new List<int>();
-           // tokens.Add(listBox1.Items.Count);
+            obj_analizador.Errores_Variables();
+            dataGridView1.DataSource = obj_analizador.listado_erroresSintac();
+          
             
-            obj_analizador.analisis_sintactico();
-            
-            //data_sintac.DataSource = obj_analizador.listado_erroresSintac();
-            //listBox1.DataSource = obj_analizador.lista_pila();
 
             
 
@@ -235,6 +242,16 @@ namespace editor_de_texto
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             
+        }
+
+        private void data_errores_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void rich_principal_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -120,6 +120,29 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="rich_principal.Text" xml:space="preserve">
+    <value>inicio hola
+vare : inter x ;
+vare : inter y := 3;
+vare : decim z ;
+vare : text a ;
+procedure metodo()
+st_procedure
+istrue x &gt; y
+st_istrue
+during z &gt;= 4
+st_during
+increases x ;
+istrue  z &lt; 5
+st_istrue
+ a := a + "mundo"
+fn_istrue
+fn_during  
+fn_istrue
+fn_procedure
+endterme
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>42</value>
   </metadata>

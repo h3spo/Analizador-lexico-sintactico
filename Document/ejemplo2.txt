@@ -1,0 +1,11 @@
+﻿
+------seguimiento-----------
+cuerpo principal 
+- started nombre
+vare decim hola ;
+
+
+
+
+Reglas v2 main
+varaible = vare + (inter|decim|text ) + nombre + ;

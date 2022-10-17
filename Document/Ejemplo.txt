@@ -115,3 +115,15 @@ fn_procedure
 endterm
 
 
+////////////////
+
+
+Ejemplo para version 2
+
+inicio hola
+vare : inter x ;
+vare : decim y := 12.13;
+vare : inter a := 12 ;
+vare : text  w := "hola";
+
+procedure metodo(variable)
